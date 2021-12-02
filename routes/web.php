@@ -31,10 +31,15 @@ use App\Http\Livewire\User\UserOrdersComponent;
 use App\Http\Livewire\User\UserProfileComponent;
 use App\Http\Livewire\User\UserReviewComponent;
 use App\Http\Livewire\WishlistComponent;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ShopComponent;
 use App\Http\Livewire\HomeComponent;
 use App\Http\Livewire\CategoryComponent;
+
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
+});
 
 Route::get('/', \App\Http\Livewire\HomeComponent::class);
 Route::get('/shop', \App\Http\Livewire\ShopComponent::class);

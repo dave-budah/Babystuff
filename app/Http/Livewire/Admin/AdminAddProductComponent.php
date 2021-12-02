@@ -78,15 +78,15 @@ class AdminAddProductComponent extends Component
     {
 
         $this->validate([
-             'name' => 'required',
-             'slug' => 'required|unique:products',
-             'short_description' => 'required',
-             'description' => 'required',
-             'regular_price' => 'required|numeric',
-             'SKU' => 'required',
-             'stock_status' => 'required',
-             'quantity' => 'required|numeric',
-             'image' => 'required|mimes:jpg,png,jpeg',
+            'name' => 'required',
+            'slug' => 'required|unique:products',
+            'short_description' => 'required',
+            'description' => 'required',
+            'regular_price' => 'required|numeric',
+            'SKU' => 'required',
+            'stock_status' => 'required',
+            'quantity' => 'required|numeric',
+            'image' => 'required|mimes:jpg,png,jpeg',
             'category_id' => 'required'
 
         ]);
@@ -103,16 +103,14 @@ class AdminAddProductComponent extends Component
         $product->stock_status = $this->stock_status;
         $product->featured = $this->featured;
         $product->quantity = $this->quantity;
-        $imageName = Carbon::now()->timestamp. '.' . $this->image->extension();
+        $imageName = Carbon::now()->timestamp . '.' . $this->image->extension();
         $this->image->storeAs('products', $imageName);
         $product->image = $imageName;
 
-        if ($this->images)
-        {
+        if ($this->images) {
             $imagesname = '';
-            foreach ($this->images as $key=>$image)
-            {
-                $imgName = Carbon::now()->timestamp. $key . '.' . $image->extension();
+            foreach ($this->images as $key => $image) {
+                $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
                 $image->storeAs('products', $imgName);
                 $imagesname = $imagesname . ',' . $imgName;
             }
@@ -121,18 +119,19 @@ class AdminAddProductComponent extends Component
 
         $product->category_id = $this->category_id;
         $product->save();
-        foreach ($this->attribute_values as $key=>$attribute_value)
-        {
-            $avalues = explode(",", $attribute_value);
-            foreach ($avalues as $avalue)
-            {
-                $attr_value = new AttributeValue();
-                $attr_value->product_attribute_id = $key;
-                $attr_value->value = $avalue;
-                $attr_value->product_id = $product->id;
-                $attr_value->save();
+
+        if (is_array($this->attribute_values)){
+            foreach ($this->attribute_values as $key => $attribute_value) {
+                $avalues = explode(",", $attribute_value);
+                foreach ($avalues as $avalue) {
+                    $attr_value = new AttributeValue();
+                    $attr_value->product_attribute_id = $key;
+                    $attr_value->value = $avalue;
+                    $attr_value->product_id = $product->id;
+                    $attr_value->save();
+                }
             }
-        }
+    }
         session()->flash('message', 'Product created successfully');
     }
     public function render()

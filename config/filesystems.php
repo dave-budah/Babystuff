@@ -34,6 +34,7 @@ return [
             'driver' => 'local',
             //'root' => storage_path('app'),
             'root' => public_path('assets/images'),
+            // change above line to base_path('assets/images')
         ],
 
         'public' => [

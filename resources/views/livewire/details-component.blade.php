@@ -35,7 +35,7 @@
                                 @foreach($images as $image)
                                     @if($image)
                                         <li data-thumb="{{asset('assets/images/products')}}/{{ $image }}">
-                                            <img src="{{asset('assets/images/products')}}/{{ $image }}" alt=" {{ $product->name }}" />
+                                            <img src="{{asset('assets/images/products')}}/{{ $image }}" alt="{{ $product->name }}"/>
                                         </li>
                                     @endif
                                 @endforeach
@@ -85,7 +85,7 @@
                                     </div>
 
                                 <div class="col-xs-10">
-                                    <select class="form-control" id="" style="width:200px" wire:model="satt.{{$av->productAttribute->name}}">
+                                    <select class="form-control" id="" style="width:200px" wire:model="satt.{{$av->productAttribute->name}}" wire:ignore>
                                         @foreach($av->productAttribute->attributeValues->where('product_id', $product->id) as $pav)
                                             <option value="{{$pav->value}}">{{$pav->value}}</option>
                                         @endforeach
